@@ -1,0 +1,28 @@
+# Android fstab file.
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+
+#TODO: Add 'check' as fs_mgr_flags with data partition.
+# Currently we dont have e2fsck compiled. So fs check would failed.
+
+#<src>                                                  <mnt_point>   <type> <mnt_flags and options>                                                           <fs_mgr_flags>
+/dev/block/mmcblk1p1                                    /sdcard       vfat   nosuid,nodev,barrier=1,data=ordered,nodelalloc                                    wait
+/dev/block/platform/soc/7824900.sdhci/by-name/boot      /boot         emmc   defaults                                                                          recoveryonly
+/dev/block/platform/soc/7824900.sdhci/by-name/recovery  /recovery     emmc   defaults                                                                          recoveryonly
+/dev/block/platform/soc/7824900.sdhci/by-name/system    /system       ext4   ro,barrier=1                                                                      wait
+/dev/block/platform/soc/7824900.sdhci/by-name/system    /system_image emmc   defaults                                                                          defaults
+/dev/block/platform/soc/7824900.sdhci/by-name/userdata  /data         ext4   rw,discard,nosuid,nodev,noatime,nodiratime,nobarrier,data=ordered,noauto_da_alloc latemount,wait,check,encryptable=footer,quota,formattable
+/dev/block/platform/soc/7824900.sdhci/by-name/cache     /cache        ext4   noatime,nosuid,nodev,barrier=1                                                    wait,check,length=-16384
+/dev/block/platform/soc/7824900.sdhci/by-name/persist   /persist      ext4   noatime,nosuid,nodev,barrier=1                                                    wait
+/dev/block/platform/soc/7824900.sdhci/by-name/config    /frp          emmc   defaults                                                                          defaults
+/dev/block/platform/soc/7824900.sdhci/by-name/misc      /misc         emmc   defaults                                                                          defaults
+/dev/block/platform/soc/7824900.sdhci/by-name/sbl1      /sbl1         emmc   defaults                                                                          defaults
+/dev/block/platform/soc/7824900.sdhci/by-name/rpm       /rpm          emmc   defaults                                                                          defaults
+/dev/block/platform/soc/7824900.sdhci/by-name/tz        /tz           emmc   defaults                                                                          defaults
+/dev/block/platform/soc/7824900.sdhci/by-name/splash    /splash       emmc   defaults                                                                          defaults
+/dev/block/platform/soc/7824900.sdhci/by-name/aboot     /aboot        emmc   defaults                                                                          defaults
+/dev/block/platform/soc/7824900.sdhci/by-name/keymaster /keymaster    emmc   defaults                                                                          defaults
+/dev/block/platform/soc/7824900.sdhci/by-name/cmnlib    /cmnlib       emmc   defaults                                                                          defaults
+/dev/block/platform/soc/7824900.sdhci/by-name/modem     /firmware     vfat   ro,nosuid,nodev                                                                   wait
+/dev/block/platform/soc/7824900.sdhci/by-name/oem       /oem          ext4   ro,nosuid,nodev                                                                   wait
+/dev/block/zram0                                        none          swap   defaults                                                                          zramsize=268435456,swapprio=32758
